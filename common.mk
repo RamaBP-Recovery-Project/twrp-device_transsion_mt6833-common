@@ -15,44 +15,30 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
 # Enable Virtual A/B OTA
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
-
 ENABLE_VIRTUAL_AB := true
-AB_OTA_UPDATER := true
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
+# A/B
+AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
-    boot \
-    dtbo \
-    lk \
-    odm \
-    odm_dlkm \
-    product \
-    system \
     system_ext \
-    vbmeta_system \
-    vbmeta_vendor \
     vendor \
-    vendor_boot \
-    vendor_dlkm
+    system \
+    boot \
+    vbmeta_system \
+    product \
+    vbmeta_vendor
+BOARD_USES_RECOVERY_AS_BOOT := true
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
-    POSTINSTALL_PATH_system=system/bin/mtk_plpath_utils \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
-
-AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_vendor=true \
-    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
-    FILESYSTEM_TYPE_vendor=ext4 \
-    POSTINSTALL_OPTIONAL_vendor=true
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh
-
-PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
 
 # Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true

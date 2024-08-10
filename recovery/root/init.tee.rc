@@ -18,6 +18,7 @@ service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/pers
 	-r /vendor/app/mcRegistry/036c0000000000000000000000000000.drbin \
 	-r /vendor/app/mcRegistry/037c0000000000000000000000000000.drbin \
 	-r /vendor/app/mcRegistry/40188311faf343488db888ad39496f9a.drbin \
+	-r /vendor/app/mcRegistry/070c0000000000000000000000000000.drbin \
 	-r /vendor/app/mcRegistry/090b0000000000000000000000000000.drbin \
 	-r /vendor/app/mcRegistry/0f5eed3c3b5a47afacca69a84bf0efad.drbin \
 	-r /vendor/app/mcRegistry/07060000000000000000000000007169.drbin \
@@ -95,5 +96,6 @@ on property:ro.crypto.type=file && property:ro.crypto.state=encrypted
 on property:vold.decrypt=trigger_restart_framework
     write /proc/bootprof "MOBICORE: create /data/vendor/mcRegistry ++ (FDE encrypted)"
     mkdir /data/vendor/mcRegistry 0775 system system
+    write /proc/bootprof "MOBICORE: create /data/vendor/mcRegistry -- (FDE encrypted)"
 
 
