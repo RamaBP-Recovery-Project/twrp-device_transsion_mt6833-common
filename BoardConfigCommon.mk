@@ -141,6 +141,9 @@ TARGET_USES_LOGD := true
 TARGET_USES_MKE2FS := true
 TW_MAX_BRIGHTNESS := 255
 
+# Display
+TW_NO_SCREEN_BLANK := true
+
 # Fastboot
 TW_NO_FASTBOOT_BOOT := true
 
